@@ -11,6 +11,7 @@ import VibeAnnotationPopover from '../../lib/content/annotation-popover.js';
 import VibeBridgeHandler from '../../lib/content/bridge-handler.js';
 import VibeToolbar from '../../lib/content/floating-toolbar.js';
 import VibeScreenshot from '../../lib/content/screenshot.js';
+import { shouldTriggerHotkey } from '../../lib/content/hotkey.js';
 
 // --- State ---
 let annotations = [];
@@ -300,7 +301,7 @@ function setupKeyboardShortcuts() {
       return;
     }
 
-    if (customShortcut && matchesShortcut(e, customShortcut)) {
+    if (shouldTriggerHotkey(e, customShortcut)) {
       e.preventDefault();
       if (VibeInspectionMode.isActive()) {
         VibeEvents.emit('inspection:stop');
@@ -309,14 +310,6 @@ function setupKeyboardShortcuts() {
       }
     }
   });
-}
-
-function matchesShortcut(e, shortcut) {
-  return e.key === shortcut.key
-    && e.ctrlKey === !!shortcut.ctrlKey
-    && e.metaKey === !!shortcut.metaKey
-    && e.shiftKey === !!shortcut.shiftKey
-    && e.altKey === !!shortcut.altKey;
 }
 
 // --- Annotation lifecycle ---

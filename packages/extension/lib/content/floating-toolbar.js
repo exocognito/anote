@@ -8,6 +8,7 @@ import VibeEvents, { vibeLocationPath } from './event-bus.js';
 import VibeShadowHost from './shadow-host.js';
 import VibeToolbarDocs from './toolbar-docs.js';
 import { renderAnnotationsMarkdown } from './export-markdown.js';
+import { isRecordableHotkey } from './hotkey.js';
 
   let toolbarEl = null;
   let settingsDropdown = null;
@@ -683,9 +684,7 @@ import { renderAnnotationsMarkdown } from './export-markdown.js';
     shortcutBtn.addEventListener('click', () => {
       if (recording) {
         // Cancel recording
-        recording = false;
-        shortcutBtn.textContent = shortcutHint;
-        shortcutBtn.classList.remove('recording');
+        cancelRecording();
         return;
       }
       recording = true;
@@ -693,8 +692,17 @@ import { renderAnnotationsMarkdown } from './export-markdown.js';
       shortcutBtn.classList.add('recording');
 
       function onKey(e) {
-        // Ignore lone modifier keys
+        // Ignore lone modifier keys — keep waiting for the actual key.
         if (['Control', 'Shift', 'Alt', 'Meta'].includes(e.key)) return;
+
+        // Reject hotkeys that would hijack typing (no modifier, or an editing
+        // key) and cancel recording instead of swallowing the next keystroke,
+        // so the user can try again. See hotkey.js for the exact rules.
+        if (!isRecordableHotkey(e)) {
+          cancelRecording();
+          return;
+        }
+
         e.preventDefault();
         e.stopPropagation();
 
@@ -714,6 +722,14 @@ import { renderAnnotationsMarkdown } from './export-markdown.js';
         document.removeEventListener('keydown', onKey, true);
         activeRecordingCleanup = null;
         VibeAPI.saveCustomShortcut(sc);
+      }
+
+      function cancelRecording() {
+        recording = false;
+        shortcutBtn.textContent = shortcutHint;
+        shortcutBtn.classList.remove('recording');
+        document.removeEventListener('keydown', onKey, true);
+        activeRecordingCleanup = null;
       }
 
       document.addEventListener('keydown', onKey, true);
