@@ -15,7 +15,7 @@ For more features explanations (like collaboration via file sharing, AI-assisted
 **2.** Run the setup wizard
 
 ```bash
-npx vibe-annotations-server init
+pnpm dlx vibe-annotations-server init
 ```
 
 One interactive command installs the global server, starts it in the background, and configures your AI coding agent (Claude Code, Cursor, Windsurf, Codex, OpenClaw, VS Code). Prefer manual? See [Installation](https://vibe-annotations.com/docs/installation).

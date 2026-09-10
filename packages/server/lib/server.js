@@ -2027,7 +2027,7 @@ figcaption{padding:4px 8px;font-size:11px;color:#6b7280;background:#fafafa}
         console.log(chalk.yellow(`
 ╔════════════════════════════════════════════════════════════════╗
 ║  Update available: ${packageJson.version} → ${latestVersion}                          ║
-║  Run: npm update -g vibe-annotations-server                    ║
+║  Run: pnpm update -g vibe-annotations-server                   ║
 ╚════════════════════════════════════════════════════════════════╝
         `));
       }

@@ -75,7 +75,7 @@ The extension is built with [WXT](https://wxt.dev/).
 
 ### Server Development
 
-1. From `packages/server/`, install deps: `pnpm install` (or `npm install`)
+1. From the repo root, install deps: `pnpm install`
 2. Run it: `node lib/server.js` (or `node bin/cli.js start`)
 3. Test your changes against `http://127.0.0.1:3846`
 
