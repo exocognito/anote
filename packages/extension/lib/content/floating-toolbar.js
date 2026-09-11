@@ -902,7 +902,7 @@ import { isRecordableHotkey } from './hotkey.js';
       } else if (serverOnline && serverOutdated) {
         statusEl.innerHTML = ICONS.serverRack;
         statusEl.style.color = 'var(--v-status-watching)';
-        statusEl.title = 'MCP Server online — update available (npm update -g vibe-annotations-server)';
+        statusEl.title = 'MCP Server online — update available (pnpm update -g vibe-annotations-server)';
       } else if (serverOnline) {
         statusEl.innerHTML = ICONS.serverRack;
         statusEl.style.color = 'var(--v-status-online)';
@@ -1126,7 +1126,7 @@ import { isRecordableHotkey } from './hotkey.js';
       // reachable but too old to have the export endpoint, point at the fix.
       const status = await VibeAPI.checkServerStatus().catch(() => null);
       if (status?.outdated) {
-        showInfoModal('Update your server', 'The .html export needs a newer annotations server. Run "npm update -g vibe-annotations-server" and restart it — or use the .md export, which works offline.');
+        showInfoModal('Update your server', 'The .html export needs a newer annotations server. Run "pnpm update -g vibe-annotations-server" and restart it — or use the .md export, which works offline.');
       } else {
         showInfoModal('Export failed', 'The .html export needs the local annotations server running. Start it, or use the .md export instead.');
       }

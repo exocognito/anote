@@ -2,8 +2,15 @@
   "name": "vibe-annotations",
   "private": true,
   "scripts": {
+    "server": "pnpm --filter vibe-annotations-server start",
+    "server:dev": "pnpm --filter vibe-annotations-server dev",
+    "cli": "node packages/server/bin/cli.js",
     "dev:web": "pnpm --filter website dev",
     "build:web": "pnpm --filter website build",
     "lint": "pnpm --filter website lint"
+  },
+  "packageManager": "pnpm@10.20.0",
+  "engines": {
+    "node": ">=18"
   }
 }

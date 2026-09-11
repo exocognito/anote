@@ -1,2 +1,12 @@
 packages:
   - "packages/*"
+
+# pnpm asks before running a dependency's install scripts. esbuild and
+# unrs-resolver need theirs to fetch native binaries for the build toolchain,
+# and sharp for the website's image pipeline. spawn-sync is a legacy shim for
+# Node versions this repo does not support.
+allowBuilds:
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+  spawn-sync: false

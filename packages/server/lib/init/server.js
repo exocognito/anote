@@ -1,7 +1,9 @@
 import { spawn, spawnSync } from 'child_process';
 import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync, openSync } from 'fs';
 import { join } from 'path';
+import { fileURLToPath } from 'url';
 import { homedir } from 'os';
+import { findGlobalPackage } from './global-package.js';
 
 const PORT = 3846;
 const HEALTH_URL = `http://127.0.0.1:${PORT}/health`;
@@ -29,10 +31,10 @@ function installArgs(mgr) {
   return ['install', '-g', 'vibe-annotations-server'];
 }
 
-export async function startServer() {
+export async function startServer(pkgMgr) {
   if (!existsSync(CONFIG_DIR)) mkdirSync(CONFIG_DIR, { recursive: true });
 
-  const resolved = resolveServerEntry();
+  const resolved = resolveServerEntry(pkgMgr);
   if (!resolved) {
     return { ok: false, reason: 'server-entry-not-found' };
   }
@@ -56,27 +58,20 @@ export async function startServer() {
   return { ok: false, reason: 'server-did-not-respond', logFile: LOG_FILE };
 }
 
-function resolveServerEntry() {
-  const candidates = [];
+function resolveServerEntry(pkgMgr) {
+  const found = findGlobalPackage(pkgMgr);
+  if (found) return found.entry;
 
+  // Nothing installed globally: fall back to the copy beside this file, which
+  // covers running straight from a workspace checkout.
   try {
-    const viaNpm = spawnSync('npm', ['root', '-g'], { stdio: 'pipe', encoding: 'utf8' });
-    if (viaNpm.status === 0) {
-      const root = viaNpm.stdout.trim();
-      candidates.push(join(root, 'vibe-annotations-server', 'lib', 'server.js'));
-    }
+    const bundled = fileURLToPath(new URL('../server.js', import.meta.url));
+    if (existsSync(bundled)) return bundled;
   } catch {
     // ignore
   }
 
-  try {
-    const bundled = new URL('../server.js', import.meta.url);
-    candidates.push(bundled.pathname);
-  } catch {
-    // ignore
-  }
-
-  return candidates.find((p) => existsSync(p));
+  return undefined;
 }
 
 async function healthOk() {

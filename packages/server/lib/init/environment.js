@@ -1,18 +1,21 @@
 import { execSync } from 'child_process';
+import { findGlobalPackage } from './global-package.js';
 
 const PORT = 3846;
 const HEALTH_URL = `http://127.0.0.1:${PORT}/health`;
 
 export async function checkEnvironment() {
+  // Detected first: which manager is in use decides where the server is looked for.
+  const pkgMgr = detectPackageManager();
   const [portState, serverInstalled] = await Promise.all([
     checkPortState(),
-    checkServerInstalled(),
+    checkServerInstalled(pkgMgr),
   ]);
 
   return {
     node: process.versions.node,
     nodeOk: majorVersion(process.versions.node) >= 18, // matches package.json engines (>=18)
-    pkgMgr: detectPackageManager(),
+    pkgMgr,
     portState,
     serverInstalled,
   };
@@ -62,16 +65,8 @@ async function checkPortState() {
   return { state: 'foreign' };
 }
 
-async function checkServerInstalled() {
-  try {
-    const out = execSync('npm ls -g --depth=0 --json vibe-annotations-server', {
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).toString();
-    const parsed = JSON.parse(out);
-    const dep = parsed?.dependencies?.['vibe-annotations-server'];
-    if (dep?.version) return { installed: true, version: dep.version };
-  } catch {
-    // not installed or npm not available
-  }
-  return { installed: false };
+async function checkServerInstalled(pkgMgr) {
+  const found = findGlobalPackage(pkgMgr);
+  if (!found) return { installed: false };
+  return found.version ? { installed: true, version: found.version } : { installed: true };
 }

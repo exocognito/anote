@@ -99,8 +99,8 @@ async function runServerStep({ env, interactive }) {
       if (result.permDenied) {
         p.log.error(
           'Install failed: permission denied on global install.\n' +
-          '  Try running with sudo, or fix your npm prefix:\n' +
-          '  https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally',
+          `  Fix your ${env.pkgMgr || 'package manager'}'s global directory, or install without -g and run the server from a checkout.\n` +
+          '  pnpm: `pnpm setup`  ·  npm: https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally',
         );
       } else {
         p.log.error(`Install failed:\n${result.stderr?.trim() || '(no stderr)'}`);
@@ -114,7 +114,7 @@ async function runServerStep({ env, interactive }) {
     return { status: 'already-running' };
   }
 
-  const start = await withSpinner('Starting server', 'Server running', () => startServer());
+  const start = await withSpinner('Starting server', 'Server running', () => startServer(env.pkgMgr));
   if (!start.ok) {
     p.log.error(`Failed to start server (${start.reason}). Logs: ${start.logFile || 'n/a'}`);
     return { status: 'start-failed' };

@@ -153,14 +153,14 @@
         <div class="vibe-guide-section">
           <div class="vibe-guide-label">3. Install MCP server <span style="font-weight:400;color:var(--v-text-secondary);">(optional)</span></div>
           <p class="vibe-guide-text">Let your coding agent fetch and resolve annotations automatically. One command does it all:</p>
-          <div class="vibe-guide-cmd" data-cmd="npx vibe-annotations-server init">
-            <code>npx vibe-annotations-server init</code>
+          <div class="vibe-guide-cmd" data-cmd="pnpm dlx vibe-annotations-server init">
+            <code>pnpm dlx vibe-annotations-server init</code>
             <button class="vibe-guide-copy" type="button">${ICONS.clipboard}</button>
           </div>
           <p class="vibe-guide-text" style="margin-top:6px;">Installs the server, starts it, and configures your AI agent interactively.</p>
           <p class="vibe-guide-text" style="margin-top:12px;">Or set it up manually:</p>
-          <div class="vibe-guide-cmd" data-cmd="npm install -g vibe-annotations-server">
-            <code>npm install -g vibe-annotations-server</code>
+          <div class="vibe-guide-cmd" data-cmd="pnpm add -g vibe-annotations-server">
+            <code>pnpm add -g vibe-annotations-server</code>
             <button class="vibe-guide-copy" type="button">${ICONS.clipboard}</button>
           </div>
           <div class="vibe-guide-cmd" data-cmd="vibe-annotations-server start">
@@ -231,13 +231,13 @@
           <div class="vibe-guide-section">
             <div class="vibe-guide-label">1. Install and start the server</div>
             <p class="vibe-guide-text">One command installs, starts, and configures your agent:</p>
-            <div class="vibe-guide-cmd" data-cmd="npx vibe-annotations-server init">
-              <code>npx vibe-annotations-server init</code>
+            <div class="vibe-guide-cmd" data-cmd="pnpm dlx vibe-annotations-server init">
+              <code>pnpm dlx vibe-annotations-server init</code>
               <button class="vibe-guide-copy" type="button">${ICONS.clipboard}</button>
             </div>
             <p class="vibe-guide-text" style="margin-top:10px;">Or manually:</p>
-            <div class="vibe-guide-cmd" data-cmd="npm install -g vibe-annotations-server">
-              <code>npm install -g vibe-annotations-server</code>
+            <div class="vibe-guide-cmd" data-cmd="pnpm add -g vibe-annotations-server">
+              <code>pnpm add -g vibe-annotations-server</code>
               <button class="vibe-guide-copy" type="button">${ICONS.clipboard}</button>
             </div>
             <div class="vibe-guide-cmd" data-cmd="vibe-annotations-server start">
@@ -330,13 +330,13 @@
           <div class="vibe-guide-section">
             <div class="vibe-guide-label">Setup</div>
             <p class="vibe-guide-text">One command installs, starts, and configures your agent:</p>
-            <div class="vibe-guide-cmd" data-cmd="npx vibe-annotations-server init">
-              <code>npx vibe-annotations-server init</code>
+            <div class="vibe-guide-cmd" data-cmd="pnpm dlx vibe-annotations-server init">
+              <code>pnpm dlx vibe-annotations-server init</code>
               <button class="vibe-guide-copy" type="button">${ICONS.clipboard}</button>
             </div>
             <p class="vibe-guide-text" style="margin-top:10px;">Or manually:</p>
-            <div class="vibe-guide-cmd" data-cmd="npm install -g vibe-annotations-server">
-              <code>npm install -g vibe-annotations-server</code>
+            <div class="vibe-guide-cmd" data-cmd="pnpm add -g vibe-annotations-server">
+              <code>pnpm add -g vibe-annotations-server</code>
               <button class="vibe-guide-copy" type="button">${ICONS.clipboard}</button>
             </div>
             <div class="vibe-guide-cmd" data-cmd="vibe-annotations-server start">
